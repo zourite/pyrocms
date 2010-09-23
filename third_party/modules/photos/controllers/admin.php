@@ -27,24 +27,29 @@ class Admin extends Admin_Controller
 		
 		$this->validation_rules = array(
 			array(
-				'field'   => 'title',
-				'label'   => lang('photo_albums.title_label'),
-				'rules'   => 'trim|required|max_length[255]|callback__check_slug'
+				'field' => 'title',
+				'label' => lang('photo_albums.title_label'),
+				'rules' => 'trim|required|max_length[255]|callback__check_slug'
 			),
 			array(
-				'field'   => 'slug',
-				'label'   => lang('photo_albums.slug_label'),
-				'rules'   => 'trim|required|max_length[255]|alpha_dash'
+				'field' => 'slug',
+				'label' => lang('photo_albums.slug_label'),
+				'rules' => 'trim|required|max_length[255]|alpha_dash'
 			),
 			array(
-				'field'   => 'description',
-				'label'   => lang('photo_albums.desc_label'),
-				'rules'   => 'trim'
+				'field' => 'description',
+				'label' => lang('photo_albums.desc_label'),
+				'rules' => 'trim'
 			),
 			array(
-				'field'   => 'parent',
-				'label'   => lang('photo_albums.parent_album_label'),
-				'rules'   => 'trim|numeric'
+				'field'	=> 'enable_comments',
+				'label'	=> lang('photo_albums.comments_label'),
+				'rules'	=> 'trim|integer'
+			),
+			array(
+				'field' => 'parent',
+				'label' => lang('photo_albums.parent_album_label'),
+				'rules' => 'trim|numeric'
 			)
 		);
 	}

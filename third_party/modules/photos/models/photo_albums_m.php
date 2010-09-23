@@ -30,7 +30,7 @@ class Photo_albums_m extends MY_Model
 			'slug'				=> $input['slug'],
 			'description' 		=> $input['description'],
             'parent' 			=> $input['parent'],
-            'enable_comments' 	=> $input['enable_comments'],
+            'enable_comments' 	=> !empty($input['enable_comments']),
             'updated_on'		=> now())
 		);
 		
@@ -75,7 +75,7 @@ class Photo_albums_m extends MY_Model
         	'slug'				=> $input['slug'],
         	'description' 		=> $input['description'],
         	'parent' 			=> $input['parent'],
-        	'enable_comments' 	=> $input['enable_comments'],
+            'enable_comments' 	=> !empty($input['enable_comments']),
         	'updated_on'		=> now()
         ));
     }
