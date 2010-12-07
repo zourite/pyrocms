@@ -144,21 +144,21 @@
 
 			<div id="page-permissions">
 
+				<p><?php echo lang('pages.permissions_explanation'); ?></p>
+
 				<ul>
 
 					<?php if ( ! empty($groups)): ?>
 
 						<?php foreach ($groups as $group): ?>
 
-						 <li class="<?php echo altenator('odd', 'even'); ?>">
+						 <li class="<?php echo alternator('odd', 'even'); ?>">
 							 <label for="permissions"><?php echo $group['id']; ?></label>
 							 <?php echo form_checkbox($group); ?>
 						 </li>
 
 						<?php endforeach; ?>
 					<?php endif; ?>
-						 
-					<p><?php echo lang('pages.permissions_explanation'); ?></p>
 
 				</ul>
 

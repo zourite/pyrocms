@@ -344,12 +344,12 @@ class Pages_m extends MY_Model {
 				// Update the permissions tables for this page
 				$this->db->update('page_permissions', array(
 					'access' => 1
-						), array(
+				), array(
 					'page_id' => $id,
 					'group_id' => $group->id
-						)
-				);
+				));
 			}
+			
 			else if ($query->num_rows() == 0 && array_key_exists($name, $input))
 			{
 
@@ -358,20 +358,19 @@ class Pages_m extends MY_Model {
 					'access' => 1,
 					'page_id' => $id,
 					'group_id' => $group->id
-						)
-				);
+				));
 			}
+			
 			else
 			{
 
 				// Update the permissions tables for this page
 				$this->db->update('page_permissions', array(
 					'access' => 0
-						), array(
+				), array(
 					'page_id' => $id,
 					'group_id' => $group->id
-						)
-				);
+				));
 			}
 		}
 

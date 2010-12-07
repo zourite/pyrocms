@@ -1,4 +1,4 @@
-	<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Pages controller
  *
@@ -15,7 +15,68 @@ class Admin extends Admin_Controller
 	 * @access private
 	 * @var array
 	 */
-	private $validation_rules = array();
+	private $validation_rules = array(
+		array(
+			'field' => 'title',
+			'label'	=> 'lang:pages.title_label',
+			'rules'	=> 'trim|required|max_length[250]'
+		),
+		array(
+			'field' => 'slug',
+			'label'	=> 'lang:pages.slug_label',
+			'rules'	=> 'trim|required|alpha_dot_dash|max_length[250]'
+		),
+		array(
+			'field' => 'body',
+			'label'	=> 'lang:pages.body_label',
+			'rules' => 'trim|required'
+		),
+		array(
+			'field' => 'layout_id',
+			'label'	=> 'lang:pages.layout_id_label',
+			'rules'	=> 'trim|numeric|required'
+		),
+		array(
+			'field'	=> 'css',
+			'label'	=> 'lang:pages.css_label',
+			'rules'	=> 'trim'
+		),
+		array(
+			'field'	=> 'js',
+			'label'	=> 'lang:pages.js_label',
+			'rules'	=> 'trim'
+		),
+		array(
+			'field' => 'meta_title',
+			'label' => 'lang:pages.meta_title_label',
+			'rules' => 'trim|max_length[250]'
+		),
+		array(
+			'field'	=> 'meta_keywords',
+			'label' => 'lang:pages.meta_keywords_label',
+			'rules' => 'trim|max_length[250]'
+		),
+		array(
+			'field'	=> 'meta_description',
+			'label'	=> 'lang:pages.meta_description_label',
+			'rules'	=> 'trim'
+		),
+		array(
+			'field' => 'rss_enabled',
+			'label'	=> 'lang:pages.rss_enabled_label',
+			'rules'	=> 'trim|numeric'
+		),
+		array(
+			'field' => 'comments_enabled',
+			'label'	=> 'lang:pages.comments_enabled_label',
+			'rules'	=> 'trim|numeric'
+		),
+		array(
+			'field'	=> 'status',
+			'label'	=> 'lang:pages.status_label',
+			'rules'	=> 'trim|alpha|required'
+		)
+	);
 
 	/**
 	 * The ID of the page, used for the validation callback
@@ -49,70 +110,6 @@ class Admin extends Admin_Controller
 		$this->load->helper(array('array', 'pages'));
 
 		$this->template->set_partial('shortcuts', 'admin/partials/shortcuts');
-
-		// Large array is large
-		$this->validation_rules = array(
-			array(
-				'field' => 'title',
-				'label'	=> lang('pages.title_label'),
-				'rules'	=> 'trim|required|max_length[250]'
-			),
-			array(
-				'field' => 'slug',
-				'label'	=> lang('pages.slug_label'),
-				'rules'	=> 'trim|required|alpha_dot_dash|max_length[250]'
-			),
-			array(
-				'field' => 'body',
-				'label'	=> lang('pages.body_label'),
-				'rules' => 'trim|required'
-			),
-			array(
-				'field' => 'layout_id',
-				'label'	=> lang('pages.layout_id_label'),
-				'rules'	=> 'trim|numeric|required'
-			),
-			array(
-				'field'	=> 'css',
-				'label'	=> lang('pages.css_label'),
-				'rules'	=> 'trim'
-			),
-			array(
-				'field'	=> 'js',
-				'label'	=> lang('pages.js_label'),
-				'rules'	=> 'trim'
-			),
-			array(
-				'field' => 'meta_title',
-				'label' => lang('pages.meta_title_label'),
-				'rules' => 'trim|max_length[250]'
-			),
-			array(
-				'field'	=> 'meta_keywords',
-				'label' => lang('pages.meta_keywords_label'),
-				'rules' => 'trim|max_length[250]'
-			),
-			array(
-				'field'	=> 'meta_description',
-				'label'	=> lang('pages.meta_description_label'),
-				'rules'	=> 'trim'
-			),
-			array(
-				'field' => 'rss_enabled',
-				'label'	=> lang('pages.rss_enabled_label'),
-				'rules'	=> 'trim|numeric'
-			),
-			array(
-				'field' => 'comments_enabled',
-				'label'	=> lang('pages.comments_enabled_label'),
-				'rules'	=> 'trim|numeric'
-			),
-			array(
-				'field'	=> 'status',
-				'label'	=> lang('pages.status_label'),
-				'rules'	=> 'trim|alpha|required'
-			),
-		);
 
 		// Set the validation rules
 		$this->form_validation->set_rules($this->validation_rules);
@@ -281,7 +278,7 @@ class Admin extends Admin_Controller
 	    }
 
 		// Load groups
-		$this->data->groups = $this->permission_m->get_groups(array('except' => array('admin')));
+		$this->data->groups = $this->ion_auth->get_groups();
 		$this->data->groups_select = array_for_select($this->data->groups, 'id', 'title');
 
 		// Assign data for display
@@ -379,19 +376,16 @@ class Admin extends Admin_Controller
 
 		// Load groups
 
-		$this->data->groupsbefore = $this->permission_m->get_groups(array('except' => array('admin')));
+		$this->data->groupsbefore = $this->ion_auth->get_groups();
 
-		$this->data->groupsbefore_select = array_for_select($this->data->groupsbefore, 'id', 'title');
+		$this->data->groupsbefore_select = array_for_select($this->data->groupsbefore, 'id', 'name');
 
 		// Build a new groups array to display checked values
 		foreach ($this->data->groupsbefore as $group)
 		{
-			$results = $this->pages_m->group_checked($id, $group->id);
-
 			$this->data->groups[] = array(
 				'name' => $group->name,
-				'id' => $group->title,
-				'checked' => $results
+				'id' => $group->description
 			);
 		}
 
