@@ -44,6 +44,9 @@ $lang['pages.create_label'] 					= 'Aggiungi figlio';
 $lang['pages.edit_label'] 						= 'Modifica';
 $lang['pages.delete_label'] 					= 'Elimina';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= 'Aggiungi pagina';
 $lang['pages.edit_title'] 						= 'Modifica la pagina "%s"';
@@ -71,4 +74,5 @@ Clicca sull\' icona "+" vicina alla pagina per vedere le pagine dipendenti da es
 
 $lang['pages.rss_explanation']					= 'Abilitando l\' RSS per questa pagina darai la possibilità di abbonarsi ad un feed RSS che mostrerà tutte le pagine dipendenti come un nuovo elemento.';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

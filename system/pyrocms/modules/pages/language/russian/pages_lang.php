@@ -50,6 +50,9 @@ $lang['pages.create_label'] 					= 'Создать потомка';
 $lang['pages.edit_label'] 						= 'Редактировать';
 $lang['pages.delete_label'] 					= 'Удалить';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // заголовки
 $lang['pages.create_title'] 					= 'Создать страницу';
 $lang['pages.edit_title'] 						= 'Редактирование страницы "%s"';
@@ -75,6 +78,9 @@ $lang['pages_parent_not_exist_error'] 	= 'Выбранная родительс�
 $lang['pages.tree_explanation'] 				= 'Список слева содержит все страницы вашего сайта. Нажмите знак "+" для отображения потомков выбранной страницы. При нажатии на страницу - в этом блоке будет выведена полезная информация.';
 
 $lang['pages.rss_explanation']					= 'При активировании RSS для этой страницы у пользователей появится возможность подписаться на все страницы-потомки, добавляемые к этой странице.';
+
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate
 
 /* End of file pages_lang.php */
 /* Location: ./system/pyrocms/modules/pages/language/russian/pages_lang.php */

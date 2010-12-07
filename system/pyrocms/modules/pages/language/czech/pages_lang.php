@@ -33,14 +33,17 @@ $lang['pages.status_label'] 					= 'Stav';
 $lang['pages.draft_label'] 						= 'Koncept';
 $lang['pages.live_label'] 						= 'Publikováno';
 $lang['pages.revisions_label']					= 'Revize';
-$lang['pages.compare_label']                                    = 'Porovnat';
-$lang['pages.preview_label']                                    = 'Náhled';
-$lang['pages.current_label']                                    = 'Současné';
+$lang['pages.compare_label']                    = 'Porovnat';
+$lang['pages.preview_label']                    = 'Náhled';
+$lang['pages.current_label']                    = 'Současné';
 
 $lang['pages.view_label'] 						= 'Zobrazit';
 $lang['pages.create_label'] 					= 'Přidat potomka';
 $lang['pages.edit_label'] 						= 'Upravit';
 $lang['pages.delete_label'] 					= 'Vymazat';
+
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
 
 // titles
 $lang['pages.create_title'] 					= 'Přidat stránku';
@@ -68,3 +71,6 @@ $lang['pages.tree_explanation'] 				= 'Seznam vlevo reprezentuje stránky na web
 Klikněte na ikonku "+" pro zobrazení stránek uvnitř. Při kliknutí na stránku tu uvidíte spoustu užitečných informací.';
 
 $lang['pages.rss_explanation']					= 'Povolení RSS pro tuto stránku dá možnost uživatelům se zapsat k odběru RSS zdroje, který zobrazuje všechny potomky stránky jako nové příspěvky.';
+
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

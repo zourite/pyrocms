@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 /**
  * Regular pages model
  *
@@ -8,8 +11,8 @@
  * @category Modules
  *
  */
-class Pages_m extends MY_Model
-{
+class Pages_m extends MY_Model {
+
 	/**
 	 * Get a page by it's path
 	 *
@@ -17,53 +20,53 @@ class Pages_m extends MY_Model
 	 * @param array $segments The path segments
 	 * @return array
 	 */
-    public function get_by_path($segments = array())
-    {
-    	// If the URI has been passed as a string, explode to create an array of segments
-    	if(is_string($segments))
-        {
-        	$segments = explode('/', $segments);
-        }
+	public function get_by_path($segments = array())
+	{
+		// If the URI has been passed as a string, explode to create an array of segments
+		if (is_string($segments))
+		{
+			$segments = explode('/', $segments);
+		}
 
-    	// Work out how many segments there are
-        $total_segments = count($segments);
+		// Work out how many segments there are
+		$total_segments = count($segments);
 
 		// Which is the target alias (the final page in the tree)
-        $target_alias = 'p'.$total_segments;
+		$target_alias = 'p' . $total_segments;
 
-        // Start Query, Select (*) from Target Alias, from Pages
-        $this->db->select($target_alias.'.*, revisions.id as revision_id, revisions.owner_id, revisions.table_name, revisions.body, revisions.revision_date, revisions.author_id');
-        $this->db->from('pages p1');
+		// Start Query, Select (*) from Target Alias, from Pages
+		$this->db->select($target_alias . '.*, revisions.id as revision_id, revisions.owner_id, revisions.table_name, revisions.body, revisions.revision_date, revisions.author_id');
+		$this->db->from('pages p1');
 
-        // Loop thorugh each Slug
-        $level = 1;
-        foreach( $segments as $segment )
-        {
-            // Current is the current page, child is the next page to join on.
-            $current_alias = 'p'.$level;
-            $child_alias = 'p'.($level - 1);
+		// Loop thorugh each Slug
+		$level = 1;
+		foreach ($segments as $segment)
+		{
+			// Current is the current page, child is the next page to join on.
+			$current_alias = 'p' . $level;
+			$child_alias = 'p' . ($level - 1);
 
-            // We dont want to join the first page again
-            if($level != 1)
-            {
-                $this->db->join('pages '.$current_alias, $current_alias.'.parent_id = '.$child_alias.'.id');
-            }
+			// We dont want to join the first page again
+			if ($level != 1)
+			{
+				$this->db->join('pages ' . $current_alias, $current_alias . '.parent_id = ' . $child_alias . '.id');
+			}
 
-            // Add slug to where clause to keep us on the right tree
-            $this->db->where($current_alias . '.slug', $segment);
+			// Add slug to where clause to keep us on the right tree
+			$this->db->where($current_alias . '.slug', $segment);
 
-            // Increment
-            ++$level;
-        }
+			// Increment
+			++$level;
+		}
 
 		// Simple join enables revisions - Yorick
-		$this->db->join('revisions', $target_alias.'.revision_id = revisions.id');
+		$this->db->join('revisions', $target_alias . '.revision_id = revisions.id');
 
-        // Can only be one result
-        $this->db->limit(1);
+		// Can only be one result
+		$this->db->limit(1);
 
-        return $this->db->get()->row();
-    }
+		return $this->db->get()->row();
+	}
 
 	/**
 	 * Count the amount of pages with param X
@@ -104,15 +107,15 @@ class Pages_m extends MY_Model
 		$id_array[] = $id;
 
 		$children = $this->db->select('id, title')
-			->where('parent_id', $id)
-			->get('pages')->result();
+						->where('parent_id', $id)
+						->get('pages')->result();
 
 		$has_children = !empty($children);
 
-		if($has_children)
+		if ($has_children)
 		{
 			// Loop through all of the children and run this function again
-			foreach($children as $child)
+			foreach ($children as $child)
 			{
 				$id_array = $this->get_descendant_ids($child->id, $id_array);
 			}
@@ -131,9 +134,9 @@ class Pages_m extends MY_Model
 	public function get_path_by_id($id)
 	{
 		$page = $this->db->select('path')
-			->where('id', $id)
-			->get('pages_lookup')
-			->row();
+						->where('id', $id)
+						->get('pages_lookup')
+						->row();
 
 		return isset($page->path) ? $page->path : '';
 	}
@@ -148,16 +151,16 @@ class Pages_m extends MY_Model
 	public function get_id_by_path($path)
 	{
 		// If the URI has been passed as a string, explode to create an array of segments
-    	if(is_array($path))
-        {
-        	$path = implode('/', $path);
-        }
+		if (is_array($path))
+		{
+			$path = implode('/', $path);
+		}
 
 		return @$this->db->select('id')
-			->where('path', $path)
-			->get('pages_lookup')
-			->row()
-			->id;
+				->where('path', $path)
+				->get('pages_lookup')
+				->row()
+		->id;
 	}
 
 	/**
@@ -175,21 +178,21 @@ class Pages_m extends MY_Model
 		do
 		{
 			$page = $this->db
-				->select('slug, parent_id')
-				->where('id', $current_id)
-				->get('pages')
-				->row();
+							->select('slug, parent_id')
+							->where('id', $current_id)
+							->get('pages')
+							->row();
 
 			$current_id = $page->parent_id;
 			array_unshift($segments, $page->slug);
 		}
-		while( $page->parent_id > 0 );
+		while ($page->parent_id > 0);
 
 		// If the URI has been passed as a string, explode to create an array of segments
-    	return $this->db
-			->set('id', $id)
-			->set('path', implode('/', $segments))
-			->insert('pages_lookup');
+		return $this->db
+				->set('id', $id)
+				->set('path', implode('/', $segments))
+				->insert('pages_lookup');
 	}
 
 	/**
@@ -201,15 +204,14 @@ class Pages_m extends MY_Model
 	 */
 	public function delete_lookup($id)
 	{
-    	if( is_array($id) )
-    	{
-    		$this->db->where_in('id', $id);
-    	}
-
-    	else
-    	{
-    		$this->db->where('id', $id);
-    	}
+		if (is_array($id))
+		{
+			$this->db->where_in('id', $id);
+		}
+		else
+		{
+			$this->db->where('id', $id);
+		}
 
 		return $this->db->delete('pages_lookup');
 	}
@@ -225,7 +227,7 @@ class Pages_m extends MY_Model
 	{
 		$descendants = $this->get_descendant_ids($id);
 		$this->delete_lookup($descendants);
-		foreach($descendants as $descendant)
+		foreach ($descendants as $descendant)
 		{
 			$this->build_lookup($descendant);
 		}
@@ -238,95 +240,188 @@ class Pages_m extends MY_Model
 	 * @param array $input The data to insert
 	 * @return bool
 	 */
-    public function create($input = array())
-    {
-        $this->load->helper('date');
+	public function create($input = array())
+	{
+		$this->load->helper('date');
 
-        $this->db->trans_start();
+		$this->db->trans_start();
 
-        $this->db->insert('pages', array(
-        	'slug' 			=> $input['slug'],
-        	'title' 		=> $input['title'],
-        	'parent_id'		=> (int) $input['parent_id'],
-            'layout_id'		=> (int) $input['layout_id'],
-            'css'			=> $input['css'],
-            'js'			=> $input['js'],
-        	'meta_title'	=> $input['meta_title'],
-        	'meta_keywords'	=> $input['meta_keywords'],
-        	'meta_description' => $input['meta_description'],
-        	'rss_enabled' 	=> (int) !empty($input['rss_enabled']),
-        	'comments_enabled' 	=> (int) !empty($input['comments_enabled']),
-        	'status' 		=> $input['status'],
-        	'created_on'	=> now()
-        ));
+		$this->db->insert('pages', array(
+			'slug' => $input['slug'],
+			'title' => $input['title'],
+			'parent_id' => (int) $input['parent_id'],
+			'layout_id' => (int) $input['layout_id'],
+			'css' => $input['css'],
+			'js' => $input['js'],
+			'meta_title' => $input['meta_title'],
+			'meta_keywords' => $input['meta_keywords'],
+			'meta_description' => $input['meta_description'],
+			'rss_enabled' => (int) !empty($input['rss_enabled']),
+			'comments_enabled' => (int) !empty($input['comments_enabled']),
+			'status' => $input['status'],
+			'created_on' => now()
+		));
 
-        $id = $this->db->insert_id();
+		$id = $this->db->insert_id();
 
-        $this->build_lookup($id);
+		$this->build_lookup($id);
 
-        $this->db->trans_complete();
+		$this->db->trans_complete();
 
-        return ($this->db->trans_status() === FALSE) ? FALSE : $id;
-    }
+		// Insert permission settings
+		$this->data->groups = $this->permissions_m->get_groups(array('except' => array('admin')));
+		$this->data->groups_select = array_for_select($this->data->groups, 'id', 'title');
 
-    /**
-     * Update a Page
- 	 *
- 	 * @access public
- 	 * @param int $id The ID of the page to update
- 	 * @param array $input The data to update
+		foreach ($this->data->groups as $group)
+		{
+			if (isset($input[$group->title]))
+			{
+				// Update the permissions tables for this page
+				$this->db->insert('page_permissions', array(
+					'access' => $input[$group->title],
+					'page_id' => $id,
+					'group_id' => $group->id
+				));
+			}
+		}
+
+		return ($this->db->trans_status() === FALSE) ? FALSE : $id;
+	}
+
+	/**
+	 * Update a Page
+	 *
+	 * @access public
+	 * @param int $id The ID of the page to update
+	 * @param array $input The data to update
 	 * @return void
-     */
-    public function update($id = 0, $input = array())
-    {
-        $this->load->helper('date');
+	 */
+	public function update($id = 0, $input = array())
+	{
+		$this->load->helper('date');
 
-        $return = $this->db->update('pages', array(
-	        'title' 		=> $input['title'],
-	        'slug' 			=> $input['slug'],
-	        'revision_id'	=> $input['revision_id'],
-	        'parent_id'		=> $input['parent_id'],
-	        'layout_id'		=> $input['layout_id'],
-	        'css'			=> $input['css'],
-	        'js'			=> $input['js'],
-        	'meta_title'	=> $input['meta_title'],
-        	'meta_keywords'	=> $input['meta_keywords'],
-        	'meta_description' => $input['meta_description'],
-        	'rss_enabled' 	=> (int) !empty($input['rss_enabled']),
-        	'comments_enabled' 	=> (int) !empty($input['comments_enabled']),
-        	'status' 		=> $input['status'],
-	        'updated_on' 	=> now()
-        ), array('id' => $id));
+		$return = $this->db->update('pages', array(
+			'title' => $input['title'],
+			'slug' => $input['slug'],
+			'revision_id' => $input['revision_id'],
+			'parent_id' => $input['parent_id'],
+			'layout_id' => $input['layout_id'],
+			'css' => $input['css'],
+			'js' => $input['js'],
+			'meta_title' => $input['meta_title'],
+			'meta_keywords' => $input['meta_keywords'],
+			'meta_description' => $input['meta_description'],
+			'rss_enabled' => (int) !empty($input['rss_enabled']),
+			'comments_enabled' => (int) !empty($input['comments_enabled']),
+			'status' => $input['status'],
+			'updated_on' => now()
+		), array('id' => $id));
 
-        $this->cache->delete_all('navigation_m');
+		// Updated 28/10/2010
+		// By: SteveChurch Kazoosoft.eu
+		//
+		// For page permission check box
+		// update or enter the entry
+		// The reason for the INSERT in this section is after pages
+		// have been created to re-insert after new group creations
 
-        return $return;
-    }
+		$this->data->groups = $this->permissions_m->get_groups();
+		$this->data->groups_select = array_for_select($this->data->groups, 'id', 'title');
 
-    /**
-     * Delete a Page
- 	 *
- 	 * @access public
- 	 * @param int $id The ID of the page to delete
- 	 * @return bool
-     */
-    public function delete($id = 0)
-    {
-        $this->db->trans_start();
+		foreach ($this->data->groups as $group)
+		{
 
-        $ids = $this->get_descendant_ids($id);
+			$query = $this->db
+				->select('access')
+				->where('page_id', $id)
+				->where('group_id', $group->id)
+				->get('page_permissions');
 
-        $this->db->where_in('id', $ids);
-    	$this->db->delete('pages');
+			$name = $group->name;
 
-        $this->db->where_in('id', $ids);
-    	$this->db->delete('pages_lookup');
+			if ($query->num_rows() == 1 && array_key_exists($name, $input))
+			{
+				// Update the permissions tables for this page
+				$this->db->update('page_permissions', array(
+					'access' => 1
+						), array(
+					'page_id' => $id,
+					'group_id' => $group->id
+						)
+				);
+			}
+			else if ($query->num_rows() == 0 && array_key_exists($name, $input))
+			{
 
-        $this->db->where_in('page_id', $ids);
-    	$this->db->delete('navigation_links');
+				// Create new permission
+				$this->db->insert('page_permissions', array(
+					'access' => 1,
+					'page_id' => $id,
+					'group_id' => $group->id
+						)
+				);
+			}
+			else
+			{
 
-        $this->db->trans_complete();
+				// Update the permissions tables for this page
+				$this->db->update('page_permissions', array(
+					'access' => 0
+						), array(
+					'page_id' => $id,
+					'group_id' => $group->id
+						)
+				);
+			}
+		}
 
-        return $this->db->trans_status() !== FALSE ? $ids : FALSE;
-    }
+		$this->cache->delete_all('navigation_m');
+		return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+	}
+
+	/**
+	 * Delete a Page
+	 *
+	 * @access public
+	 * @param int $id The ID of the page to delete
+	 * @return bool
+	 */
+	public function delete($id = 0)
+	{
+		$this->db->trans_start();
+
+		$ids = $this->get_descendant_ids($id);
+
+		$this->db->where_in('id', $ids);
+		$this->db->delete('pages');
+
+		$this->db->where_in('page_id', $ids);
+		$this->db->delete('page_permissions');
+
+		$this->db->where_in('id', $ids);
+		$this->db->delete('pages_lookup');
+
+		$this->db->where_in('page_id', $ids);
+		$this->db->delete('navigation_links');
+
+		$this->db->trans_complete();
+
+		return $this->db->trans_status() !== FALSE ? $ids : FALSE;
+	}
+
+	/**
+	 * Can user view this page?
+	 * By: SteveChurch (KazooSoft)
+	 *
+	 * @access public
+	 * @param$page_id, $group_id
+	 * @return Boolean
+	 */
+	public function view_permission($page_id, $group_id = NULL)
+	{
+		return $this->db
+			->where('page_id', (int) $page_id)
+			->where('group_id', (int) $group_id)
+			->count_all_results('page_permissions') > 0;
+	}
 }

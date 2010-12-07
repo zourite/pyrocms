@@ -42,6 +42,9 @@ $lang['pages.create_label'] 					= 'Adicionar filho';
 $lang['pages.edit_label'] 						= 'Editar';
 $lang['pages.delete_label'] 					= 'Remover';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= 'Adicionar página';
 $lang['pages.edit_title'] 						= 'Editar página "%s"';
@@ -68,6 +71,9 @@ $lang['pages.tree_explanation'] 				= 'A lista da esquerda representa as página
 Clique no ícone "+" próximo da página para exibir as páginas associadas. Quando você clicar na página você visualizará várias informações úteis nesta caixa.';
 
 $lang['pages.rss_explanation']					= 'Ativando o Feed RSS para esta página dará acesso aos usuários a chance de se inscreverem a este Feed e receberem uma atualização imediata quando uma nova página filho for adicionada.';
+
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate
 
 /* End of file pages_lang.php */
 /* Location: ./system/pyrocms/modules/pages/language/brazilian/pages_lang.php */

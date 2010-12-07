@@ -24,6 +24,7 @@ class Pages extends Public_Controller
     	parent::Public_Controller();
         $this->load->model('pages_m');
         $this->load->model('page_layouts_m');
+		$this->lang->load('pages');
         
         // This basically keeps links to /home always pointing to the actual homepage even when the default_controller is changed
 		@include(APPPATH.'config/routes.php'); // simple hack to get the default_controller, could find another way.
@@ -88,6 +89,17 @@ class Pages extends Public_Controller
         {
         	$page = $this->_404($url_segments);
         }
+
+		// If we aren't dealing with a draft, make sure they have permissions
+		else
+		{
+			$group_id = $this->user ? $this->user->group_id : NULL;
+
+			if ($this->user AND $this->pages_m->view_permission($page->id, $group_id))
+			{
+				show_error('no perms.');
+			}
+		}
 
 		// If the page is missing, set the 404 status header
         if ( $page->slug == '404')

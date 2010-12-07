@@ -33,9 +33,9 @@ $lang['pages.status_label'] 					= 'الحالة';
 $lang['pages.draft_label'] 						= 'مسودّة';
 $lang['pages.live_label'] 						= 'منشور';
 $lang['pages.revisions_label']					= 'التعديلات';
-$lang['pages.compare_label']                                    = 'مقارنة';
-$lang['pages.preview_label']                                    = 'معاينة';
-$lang['pages.current_label']                                    = 'الحالية';
+$lang['pages.compare_label']                    = 'مقارنة';
+$lang['pages.preview_label']                    = 'معاينة';
+$lang['pages.current_label']                    = 'الحالية';
 
 $lang['pages.view_label'] 						= 'عرض';
 $lang['pages.create_label'] 					= 'إضافة صفحة فرعيّة';
@@ -48,8 +48,8 @@ $lang['pages.edit_title'] 						= 'تعديل الصفحة "%s"';
 $lang['pages.list_title'] 						= 'سرد الصفحات';
 $lang['pages.layouts_create_title'] 			= 'إضافة تخطيط صفحة';
 $lang['pages.layouts_list_title'] 				= 'سرد تخطيطات الصفحات';
-$lang['pages.compare_revisions_title']                          = 'مقارنة التعديلات';
-$lang['pages.preview_revision_title']                           = 'معاينة التعديلات';
+$lang['pages.compare_revisions_title']          = 'مقارنة التعديلات';
+$lang['pages.preview_revision_title']           = 'معاينة التعديلات';
 
 // messages
 $lang['pages.no_pages'] 						= 'لا يوجد صفحات.';
@@ -69,4 +69,5 @@ $lang['pages.tree_explanation'] 				= 'القائمة التي على اليمي
 
 $lang['pages.rss_explanation']					= 'تمكين خدمة RSS لهذه الصفحة سيمكّن المستخدمين من الإشتراك بتغذية RSS التي تظهر كل صفحة تابعة لهذه الصفحة.';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

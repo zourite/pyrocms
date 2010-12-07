@@ -43,6 +43,9 @@ $lang['pages.create_label'] 					= 'Unterobjekt hinzufügen';//there is no germa
 $lang['pages.edit_label'] 						= 'Bearbeiten';
 $lang['pages.delete_label'] 					= 'Löschen';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= 'Seite erstellen';
 $lang['pages.edit_title'] 						= 'Seite "%s" bearbeiten';
@@ -70,4 +73,5 @@ Wähle das "+" Icon neben der Seite um ihre untergeordneten Seiten anzuzeigen. D
 
 $lang['pages.rss_explanation']					= 'Die Aktivierung von RSS auf dieser Seite ermöglicht es, einen RSS-Feed zu abonnieren, in dem sämtliche Unterobjekte enthalten sind. Diese scheinen dabei als eigener Eintrag auf.';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

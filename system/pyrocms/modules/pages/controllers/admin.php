@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+	<?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Pages controller
  *
@@ -43,6 +43,7 @@ class Admin extends Admin_Controller
 
 		$this->load->model('pages_m');
 		$this->load->model('page_layouts_m');
+		$this->load->model('permissions/permission_m');
 		$this->load->model('navigation/navigation_m');
 		$this->lang->load('pages');
 		$this->load->helper(array('array', 'pages'));
@@ -279,7 +280,11 @@ class Admin extends Admin_Controller
 			$parent_page->path 	= $this->pages_m->get_path_by_id($parent_id);
 	    }
 
-	    // Assign data for display
+		// Load groups
+		$this->data->groups = $this->permission_m->get_groups(array('except' => array('admin')));
+		$this->data->groups_select = array_for_select($this->data->groups, 'id', 'title');
+
+		// Assign data for display
 	    $this->data->page 			=& $page;
 	    $this->data->parent_page 	=& $parent_page;
 
@@ -372,7 +377,25 @@ class Admin extends Admin_Controller
 			$parent_page->path 	= $this->pages_m->get_path_by_id($page->parent_id);
 	    }
 
-	    // Assign data for display
+		// Load groups
+
+		$this->data->groupsbefore = $this->permission_m->get_groups(array('except' => array('admin')));
+
+		$this->data->groupsbefore_select = array_for_select($this->data->groupsbefore, 'id', 'title');
+
+		// Build a new groups array to display checked values
+		foreach ($this->data->groupsbefore as $group)
+		{
+			$results = $this->pages_m->group_checked($id, $group->id);
+
+			$this->data->groups[] = array(
+				'name' => $group->name,
+				'id' => $group->title,
+				'checked' => $results
+			);
+		}
+
+		// Assign data for display
 	    $this->data->page 			=& $page;
 		$this->data->revisions		=& $revisions;
 	    $this->data->parent_page 	=& $parent_page;

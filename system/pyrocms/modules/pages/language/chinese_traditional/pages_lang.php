@@ -42,6 +42,9 @@ $lang['pages.create_label'] 					= '新增子頁面';
 $lang['pages.edit_label'] 						= '編輯';
 $lang['pages.delete_label'] 					= '刪除';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= '新增頁面';
 $lang['pages.edit_title'] 						= '編輯頁面 "%s"';
@@ -68,4 +71,5 @@ $lang['pages.tree_explanation'] 				= '左側表列了您網站中的自定頁�
 
 $lang['pages.rss_explanation']					= '啟用這頁的 RSS 功能，用戶將可訂閱含有該子頁面資訊的 RSS Feed。';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

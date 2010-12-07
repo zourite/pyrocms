@@ -16,6 +16,7 @@
 				<li><a href="#page-design"><span><?php echo lang('pages.design_label');?></span></a></li>
 				<li><a href="#page-script"><span><?php echo lang('pages.script_label');?></span></a></li>
 				<li><a href="#page-options"><span><?php echo lang('pages.options_label');?></span></a></li>
+				<li><a href="#page-permissions"><span><?php echo lang('pages.permissions_label');?></span></a></li>
 				<li><a href="#revision-options"><span><?php echo lang('pages.revisions_label');?></span></a></li>
 			</ul>
 
@@ -135,6 +136,30 @@
 						<?php echo form_checkbox('rss_enabled', 1, $page->rss_enabled == 1); ?>
 						<p style="margin-left: 160px;"><?php echo lang('pages.rss_explanation'); ?></p>
 					</li>
+				</ul>
+
+			</div>
+
+			<!-- Permissions tab-->
+
+			<div id="page-permissions">
+
+				<ul>
+
+					<?php if ( ! empty($groups)): ?>
+
+						<?php foreach ($groups as $group): ?>
+
+						 <li class="<?php echo altenator('odd', 'even'); ?>">
+							 <label for="permissions"><?php echo $group['id']; ?></label>
+							 <?php echo form_checkbox($group); ?>
+						 </li>
+
+						<?php endforeach; ?>
+					<?php endif; ?>
+						 
+					<p><?php echo lang('pages.permissions_explanation'); ?></p>
+
 				</ul>
 
 			</div>

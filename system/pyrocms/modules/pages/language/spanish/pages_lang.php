@@ -27,15 +27,15 @@ $lang['pages.css_label'] 						= 'CSS';
 $lang['pages.js_label'] 						= 'JavaScript';
 $lang['pages.access_label'] 					= 'Acceder';
 $lang['pages.rss_enabled_label'] 				= 'RSS enabled'; #translate
-$lang['pages.comments_enabled_label'] 		= 'Comments enabled'; #translate
+$lang['pages.comments_enabled_label']			= 'Comments enabled'; #translate
 
 $lang['pages.status_label'] 					= 'Estado';
 $lang['pages.draft_label'] 						= 'Borrador';
 $lang['pages.live_label'] 						= 'En vivo';
 $lang['pages.revisions_label']					= 'Revisions'; #translate
-$lang['pages.compare_label']                                    = 'Compare'; #translate
-$lang['pages.preview_label']                                    = 'Preview'; #translate
-$lang['pages.current_label']                                    = 'Current'; #translate
+$lang['pages.compare_label']					= 'Compare'; #translate
+$lang['pages.preview_label']					= 'Preview'; #translate
+$lang['pages.current_label']					= 'Current'; #translate
 
 
 $lang['pages.view_label'] 						= 'Ver';
@@ -43,14 +43,17 @@ $lang['pages.create_label'] 					= 'Añadir página hija';
 $lang['pages.edit_label'] 						= 'Editar';
 $lang['pages.delete_label'] 					= 'Borrar';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= 'Crear p&aacute;gina';
 $lang['pages.edit_title'] 						= 'Editar p&aacute;gina "%s"';
 $lang['pages.list_title'] 						= 'Listar páginas';
 $lang['pages.layouts_create_title'] 			= 'Agregar un diseño de página';
 $lang['pages.layouts_list_title'] 				= 'Lista de diseños de páginas';
-$lang['pages.compare_revisions_title']                          = 'Compare Revisions'; #translate
-$lang['pages.preview_revision_title']                           = 'Preview Revision'; #translate
+$lang['pages.compare_revisions_title']          = 'Compare Revisions'; #translate
+$lang['pages.preview_revision_title']           = 'Preview Revision'; #translate
 
 // messages
 $lang['pages.no_pages'] 						= 'No hay p&aacute;ginas creadas.';
@@ -70,4 +73,5 @@ Has click en el icono de "+" a un lado de la página para mostrar las páginas d
 
 $lang['pages.rss_explanation']					= 'Enabling RSS for this page will give users a chance to subscribe to an RSS feed which shows each immediate page child as a new entry.'; #translate
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

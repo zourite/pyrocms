@@ -33,15 +33,18 @@ $lang['pages.status_label'] 					= 'Status';
 $lang['pages.draft_label'] 						= 'Concept';
 $lang['pages.live_label'] 						= 'Live';
 $lang['pages.revisions_label']					= 'Revisies';
-$lang['pages.compare_label']                                    = 'Compare'; #translate
-$lang['pages.preview_label']                                    = 'Preview'; #translate
-$lang['pages.current_label']                                    = 'Current'; #translate
+$lang['pages.compare_label']                    = 'Compare'; #translate
+$lang['pages.preview_label']                    = 'Preview'; #translate
+$lang['pages.current_label']                    = 'Current'; #translate
 
 
 $lang['pages.view_label'] 						= 'Bekijk';
 $lang['pages.create_label'] 					= 'Voeg kind toe';
 $lang['pages.edit_label'] 						= 'Wijzig';
 $lang['pages.delete_label'] 					= 'Verwijder';
+
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
 
 // titles
 $lang['pages.create_title'] 					= 'Voeg pagina toe';
@@ -70,4 +73,5 @@ Klik op het "+" icoon naast de pagina om de onderliggende pagina&apos;s te zien.
 
 $lang['pages.rss_explanation']					= 'Het inschakelen van RSS voor deze pagina laat gebruikers een abonnement op een RSS-feed nemen waarin onderliggende pagina&apos;s direct getoond worden.';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

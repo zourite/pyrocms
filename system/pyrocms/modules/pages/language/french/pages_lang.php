@@ -43,6 +43,9 @@ $lang['pages.create_label'] 					= 'Ajouter enfant';
 $lang['pages.edit_label'] 						= 'Modifier';
 $lang['pages.delete_label'] 					= 'Supprimer';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= 'Créer une page';
 $lang['pages.edit_title'] 						= 'Modifier la page "%s"';
@@ -70,4 +73,5 @@ Cliquez sur l\'icône "+" à côté de la page pour afficher les pages incluses.
 
 $lang['pages.rss_explanation']					= 'Activer RSS pour cette page permettra à un utilisateur de souscrire au flux RSS contenant chacun des pages enfant.';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate

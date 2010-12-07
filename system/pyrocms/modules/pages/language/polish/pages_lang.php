@@ -43,6 +43,9 @@ $lang['pages.create_label'] 					= 'Dodaj potomka';
 $lang['pages.edit_label'] 						= 'Edytuj';
 $lang['pages.delete_label'] 					= 'Usuń';
 
+$lang['pages.permissions_label']				= 'Permissions'; #translate
+$lang['pages.page_permissions_label']			= 'Page Permissions'; #translate
+
 // titles
 $lang['pages.create_title'] 					= 'Dodaj stronę';
 $lang['pages.edit_title'] 						= 'Edytuj stronę "%s"';
@@ -70,4 +73,5 @@ Kliknij ikonę "+" obok danej strony aby wyświetlić strony które zawiera. Je�
 
 $lang['pages.rss_explanation']					= 'Enabling RSS for this page will give users a chance to subscribe to an RSS feed which shows each immediate page child as a new entry.';
 
-?>
+$lang['pages.permissions_explanation']			= 'Enable user access to pages. Checked signifies access to a page. By default no roles have access.'; #translate
+$lang['pages.permission_denied']				= 'Sorry you do not have permission to access this page. Please register an account or request elevated permissions.'; #translate
