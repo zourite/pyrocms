@@ -89,6 +89,14 @@ class MY_Parser extends CI_Parser {
 		// TAG SUPPORT
 		$this->_ci->load->library('tags');
 		$this->_ci->tags->set_trigger('pyro:');
+		
+		preg_match_all('/{pyro:widgets:instance id="(.*?)"}/', $string, $instances);
+		
+		if(!empty($instances[1]))
+		{
+			Events::trigger('load_assets', $instances[1]);
+		}
+		
 		$parsed = $this->_ci->tags->parse($string, $data, array($this, 'parser_callback'));
 		// END TAG SUPPORT
 

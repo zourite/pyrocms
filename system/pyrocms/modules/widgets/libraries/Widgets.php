@@ -373,4 +373,9 @@ class Widgets
 	{
 		return (array) unserialize($options);
 	}
+	
+	public function get_path($name)
+	{
+		return $this->_widget_locations[$name];
+	}
 }
