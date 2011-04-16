@@ -290,8 +290,8 @@ class Admin extends Admin_Controller
 			}
 	    }
 
-		$this->load->model('files/file_attached_m');
-		$this->lang->load('files/file_attached'); // TODO: Make language file.
+		$this->load->model('files/files_attached_m');
+		$this->lang->load('files/files_attached'); // TODO: Write language strings.
 
 		$page->attachments_key = $this->file_attached_m->generate_key();
 

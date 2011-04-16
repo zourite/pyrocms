@@ -12,6 +12,7 @@
 
 	<ul class="tab-menu">
 		<li><a href="#page-content"><span><?php echo lang('pages.content_label');?></span></a></li>
+		<li><a href="#page-attachments"><span><?php echo lang('files_attached.attachments_label');?></span></a></li>
 		<li><a href="#page-meta"><span><?php echo lang('pages.meta_label');?></span></a></li>
 		<li><a href="#page-design"><span><?php echo lang('pages.design_label');?></span></a></li>
 		<li><a href="#page-script"><span><?php echo lang('pages.script_label');?></span></a></li>
@@ -75,32 +76,32 @@
 	<div id="page-attachments">
 		<ul>
 			<li>
-				<label for="attachment_type" class="attachment"><?php echo lang('file_attached.attachment_type_label');?></label>
+				<label for="attachment_type" class="attachment"><?php echo lang('files_attached.attachment_type_label');?></label>
 				<span class="spacer-right">
-					<?php echo form_radio('attachment_type', 'file-browser') ?> <?php echo lang('file_attached.type_browser_label');?>
-					<?php echo form_radio('attachment_type', 'file-upload') ?> <?php echo lang('file_attached.type_upload_label');?>
-					<?php echo form_radio('attachment_type', 'link') ?> <?php echo lang('file_attached.type_link_label');?>
+					<?php echo form_radio('attachment_type', 'file-browser') ?> <?php echo lang('files_attached.type_file_browser_label');?>
+					<?php echo form_radio('attachment_type', 'file-upload') ?> <?php echo lang('files_attached.type_file_upload_label');?>
+					<?php echo form_radio('attachment_type', 'link') ?> <?php echo lang('files_attached.type_link_label');?>
 				</span>
 				<?php echo form_hidden('attachments_key', $page->attachments_key); ?>
 			</li>
 			<li>
 				<p class="attachment_type_desc">
-					<?php echo lang('file_attached.attachment_type_desc'); ?>
+					<?php echo lang('files_attached.attachment_type_desc'); ?>
 				</p>
 				<div id="file-browser" class="hidden">
-					<label for="file_browser"><?php echo lang('file_attached.file_browser_label'); ?></label>
+					<label for="file_browser"><?php echo lang('files_attached.file_browser_label'); ?></label>
 					<?php /* TODO: Folders dropdown -> list folder contents -> filter/select file */ ?>
 				</div>
 				<div id="file-upload" class="hidden">
-					<label for="file_upload"><?php echo lang('file_attached.file_upload_label'); ?></label>
+					<label for="file_upload"><?php echo lang('files_attached.file_upload_label'); ?></label>
 					<?php /* TODO: File upload form -> upload and save on folder dropbox */ ?>
 				</div>
 				<div id="link" class="hidden">
-					<label for="link"><?php echo lang('file_attached.link_label');?></label>
+					<label for="link"><?php echo lang('files_attached.link_label');?></label>
 					<?php echo form_input('link', 'http://'); ?>
 					<?php /* TODO: Copy required label */ ?>
 					<div class="buttons buttons-icon">
-						<?php echo anchor('#', lang('file_attachment.attach_link_label'), 'class="button attach"'); ?>
+						<?php echo anchor('#', lang('files_attachment.attach_link_label'), 'class="button attach"'); ?>
 					</div>
 				</div>
 			</li>
@@ -110,7 +111,7 @@
 			<?php foreach ($page->attachments as $attachment): ?>
 			<li class="attachment">
 				<label>
-					<?php echo form_checkbox('attachments[]', $attachment->file_alias); /* TYPE:VALUE */ ?>
+					<?php echo form_checkbox('attachments[]', $attachment->file_alias, TRUE); /* TYPE:VALUE */ ?>
 					<span class="name type-<?php echo $attachment->type; ?>"><?php echo $attachemnt->name; ?></span>
 				</label>
 			</li>
