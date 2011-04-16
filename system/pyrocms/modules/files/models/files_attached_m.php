@@ -8,14 +8,15 @@
  * @author		PyroCMS Dev Team
  * @license		Apache License v2.0
  * @link		http://pyrocms.com
- * @since		Version 1.0-dev
+ * @since		Version 1.1.0
  * @filesource
  */
 
 /**
- * PyroCMS File Attachments Model
+ * PyroCMS File Attached Model
  *
- * Service for attachments
+ * Integration of the attachments with any module to create links for download of
+ * files in website frontend, create thumbnails or feature image for pages, etc...
  *
  * @author		Marcos Coelho <marcos@marcoscoelho.com>
  * @package		PyroCMS
@@ -29,5 +30,5 @@ class Files_attached_m extends MY_Model {
 	}
 }
 
-/* End of file file_folders_m.php */
-/* Location: ./system/pyrocms/modules/files/models/file_folders_m.php */ 
+/* End of file files_attached_m.php */
+/* Location: ./system/pyrocms/modules/files/models/files_attached_m.php */ 
