@@ -293,11 +293,18 @@ class Admin extends Admin_Controller
 		$this->load->model('files/files_attached_m');
 		$this->lang->load('files/files_attached'); // TODO: Write language strings.
 
-		$page->attachments_key = $this->file_attached_m->generate_key();
+		$page->attachments_key = $this->files_attached_m->generate_key();
 
 		// Loop through each rule
 		foreach ($this->validation_rules as $rule)
 		{
+			if ($rule['field'] == 'attachments[]')
+			{
+				$page->attachments = $this->input->post('attachments');
+
+				continue;
+			}
+
 			$page->{$rule['field']} = $this->input->post($rule['field']);
 		}
 

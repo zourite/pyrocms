@@ -21,7 +21,7 @@
  * @package		PyroCMS
  * @subpackage	Files
  */
-class File_attached_m extends MY_Model {
+class Files_attached_m extends MY_Model {
 
 	public function generate_key()
 	{
