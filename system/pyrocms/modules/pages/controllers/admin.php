@@ -28,12 +28,12 @@ class Admin extends Admin_Controller
 			),
 			array(
 				'field' => 'attachments[]',
-				'label'	=> 'lang:file_attached.attachments_label',
+				'label'	=> 'lang:files_attached.attachments_label',
 				'rules'	=> ''
 			),
 			array(
 				'field' => 'attachments_key',
-				'label'	=> 'lang:file_attached.attachments_key_label',
+				'label'	=> 'lang:files_attached.attachments_key_label',
 				'rules'	=> 'trim|required|exact_length[40]|callback__check_attachments_key'
 			),
 			array(
