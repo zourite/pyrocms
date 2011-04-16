@@ -27,6 +27,16 @@ class Admin extends Admin_Controller
 				'rules'	=> 'trim|required|alpha_dot_dash|max_length[250]'
 			),
 			array(
+				'field' => 'attachments[]',
+				'label'	=> 'lang:file_attached.attachments_label',
+				'rules'	=> ''
+			),
+			array(
+				'field' => 'attachments_key',
+				'label'	=> 'lang:file_attached.attachments_key_label',
+				'rules'	=> 'trim|required|exact_length[40]|callback__check_attachments_key'
+			),
+			array(
 				'field' => 'body',
 				'label'	=> 'lang:pages.body_label',
 				'rules' => 'trim|required'
@@ -279,6 +289,11 @@ class Admin extends Admin_Controller
 				$this->session->set_flashdata('notice', lang('pages_create_error'));
 			}
 	    }
+
+		$this->load->model('files/file_attached_m');
+		$this->lang->load('files/file_attached'); // TODO: Make language file.
+
+		$page->attachments_key = $this->file_attached_m->generate_key();
 
 		// Loop through each rule
 		foreach ($this->validation_rules as $rule)

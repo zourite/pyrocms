@@ -47,21 +47,21 @@
 					<?php echo form_input('', $page->slug, 'size="20" class="width-10" disabled="disabled"'); ?>
 				<?php else: ?>
 					<?php echo form_input('slug', $page->slug, 'size="20" class="width-10"'); ?>
-					<span class="required-icon tooltip"><?php echo lang('required_label');?></span>
+					<span class="required-icon tooltip"><?php echo lang('required_label'); ?></span>
 				<?php endif;?>
 
 				<?php echo config_item('url_suffix'); ?>
 			</li>
 
 			<li>
-				<label for="category_id"><?php echo lang('pages.status_label');?></label>
-				<?php echo form_dropdown('status', array('draft'=>lang('pages.draft_label'), 'live'=>lang('pages.live_label')), $page->status) ?>
+				<label for="category_id"><?php echo lang('pages.status_label'); ?></label>
+				<?php echo form_dropdown('status', array('draft'=>lang('pages.draft_label'), 'live'=>lang('pages.live_label')), $page->status); ?>
 			</li>
 
 			<?php if ($this->method == 'create'): ?>
 			<li class="even">
 				<label for="navigation_group_id"><?php echo lang('pages.navigation_label');?></label>
-				<?php echo form_dropdown('navigation_group_id', array(lang('select.none')) + $navigation_groups, $page->navigation_group_id) ?>
+				<?php echo form_dropdown('navigation_group_id', array(lang('select.none')) + $navigation_groups, $page->navigation_group_id); ?>
 			</li>
 			<?php endif; ?>
 
@@ -69,7 +69,56 @@
 				<?php echo form_textarea(array('id'=>'body', 'name'=>'body', 'value' => stripslashes($page->body), 'rows' => 50, 'class'=>'wysiwyg-advanced')); ?>
 			</li>
 		</ul>
+	</div>
 
+	<!-- Attachments tab -->
+	<div id="page-attachments">
+		<ul>
+			<li>
+				<label for="attachment_type" class="attachment"><?php echo lang('file_attached.attachment_type_label');?></label>
+				<span class="spacer-right">
+					<?php echo form_radio('attachment_type', 'file-browser') ?> <?php echo lang('file_attached.type_browser_label');?>
+					<?php echo form_radio('attachment_type', 'file-upload') ?> <?php echo lang('file_attached.type_upload_label');?>
+					<?php echo form_radio('attachment_type', 'link') ?> <?php echo lang('file_attached.type_link_label');?>
+				</span>
+				<?php echo form_hidden('attachments_key', $page->attachments_key); ?>
+			</li>
+			<li>
+				<p class="attachment_type_desc">
+					<?php echo lang('file_attached.attachment_type_desc'); ?>
+				</p>
+				<div id="file-browser" class="hidden">
+					<label for="file_browser"><?php echo lang('file_attached.file_browser_label'); ?></label>
+					<?php /* TODO: Folders dropdown -> list folder contents -> filter/select file */ ?>
+				</div>
+				<div id="file-upload" class="hidden">
+					<label for="file_upload"><?php echo lang('file_attached.file_upload_label'); ?></label>
+					<?php /* TODO: File upload form -> upload and save on folder dropbox */ ?>
+				</div>
+				<div id="link" class="hidden">
+					<label for="link"><?php echo lang('file_attached.link_label');?></label>
+					<?php echo form_input('link', 'http://'); ?>
+					<?php /* TODO: Copy required label */ ?>
+					<div class="buttons buttons-icon">
+						<?php echo anchor('#', lang('file_attachment.attach_link_label'), 'class="button attach"'); ?>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<ul class="attachemnts-list">
+		<?php if ($page->attachments): ?>
+			<?php foreach ($page->attachments as $attachment): ?>
+			<li class="attachment">
+				<label>
+					<?php echo form_checkbox('attachments[]', $attachment->file_alias); /* TYPE:VALUE */ ?>
+					<span class="name type-<?php echo $attachment->type; ?>"><?php echo $attachemnt->name; ?></span>
+				</label>
+			</li>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<li cass="empty"></li>
+		<?php endif; ?>
+		</ul>
 	</div>
 
 	<!-- Meta data tab -->
