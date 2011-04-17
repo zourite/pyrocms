@@ -75,32 +75,45 @@
 		<ul>
 			<li class="<?php echo alternator('even', ''); ?>">
 				<label for="attachment_type" class="attachment"><?php echo lang('files_attached.attachment_type_label');?></label>
-				<span class="spacer-right inline">
+				<div class="spacer-right inline">
 					<label><?php echo form_radio('attachment_type', 'file-browser') ?> <?php echo lang('files_attached.type_file_browser_label');?></label>
 					<label><?php echo form_radio('attachment_type', 'file-upload') ?> <?php echo lang('files_attached.type_file_upload_label');?></label>
 					<label><?php echo form_radio('attachment_type', 'link') ?> <?php echo lang('files_attached.type_link_label');?></label>
-				</span>
+				</div>
 				<?php echo form_hidden('attachments_key', $page->attachments_key); ?>
 			</li>
 			<li class="<?php echo alternator('even', ''); ?>">
 				<p class="attachment_type_desc spacer-bottom-none">
 					<?php echo lang('files_attached.attachment_type_desc'); ?>
 				</p>
-				<div id="file-browser" class="hidden">
-					<label for="file_browser"><?php echo lang('files_attached.file_browser_label'); ?></label>
+				<div id="attachment-file-browser" class="hidden">
+					<label for="file_browser"><?php echo lang('files_attached.do_file_browser_label'); ?></label>
 					<?php /* TODO: Folders dropdown -> list folder contents -> filter/select file */ ?>
 				</div>
-				<div id="file-upload" class="hidden">
-					<label for="file_upload"><?php echo lang('files_attached.file_upload_label'); ?></label>
+				<div id="attachment-file-upload" class="hidden">
+					<label for="file_upload"><?php echo lang('files_attached.do_file_upload_label'); ?></label>
 					<?php /* TODO: File upload form -> upload and save on folder dropbox */ ?>
 				</div>
-				<div id="link" class="hidden">
-					<label for="link"><?php echo lang('files_attached.link_label');?></label>
-					<?php echo form_input('link', 'http://'); ?>
-					<?php /* TODO: Copy required label */ ?>
-					<div class="button-icons inline">
-						<?php echo anchor('#', lang('files_attached.attach_link_label'), 'class="button attach"'); ?>
-					</div>
+				<div id="attachment-link" class="hidden">
+					<h3><?php echo lang('files_attached.do_link_label'); ?></h3>
+					<ul>
+						<li class="even">
+							<label for="attachment_link_url"><?php echo lang('files_attached.link_url_label');?></label>
+							<?php echo form_input('attachment_link_url', 'http://'); ?>
+							<span class="required-icon tooltip"><?php echo lang('required_label');?></span>
+							<div class="spacer-left button-icons inline">
+								<?php echo anchor('admin/files/attachments/attach/link', lang('files_attached.attach_link_label'), 'title="' . lang('files_attached.attach_link_desc') . '" class="button attach"'); ?>
+							</div>
+						</li>
+						<li>
+							<label for="attachment_link_title"><?php echo lang('files_attached.link_title_label');?></label>
+							<?php echo form_input('attachment_link_title', ''); ?>
+						</li>
+						<li class="even">
+							<label for="attachment_link_class"><?php echo lang('files_attached.link_class_label');?></label>
+							<?php echo form_input('attachment_link_class', ''); ?>
+						</li>
+					</ul>
 				</div>
 			</li>
 			<li class="<?php echo alternator('even', ''); ?>">
@@ -110,14 +123,12 @@
 					<li class="attachment">
 						<label>
 							<?php echo form_checkbox('attachments[]', $attachment->id, TRUE); ?>
-							<span class="name type-<?php echo $attachment->type; ?>"><?php echo $attachemnt->name; ?></span>
+							<span class="name type-<?php echo $attachment->type; ?>"><?php echo $attachemnt->title; ?></span>
 						</label>
 					</li>
 					<?php endforeach; ?>
-					<li cass="empty hidden"><p class="spacer-bottom-none"><?php echo lang('files_attached.no_attachments_desc'); ?></p></li>
-				<?php else: ?>
-					<li cass="empty"><p class="spacer-bottom-none"><?php echo lang('files_attached.no_attachments_desc'); ?></p></li>
 				<?php endif; ?>
+					<li cass="empty<?php echo $page->attachments ? ' hidden': ''; ?>"><p class="spacer-bottom-none"><?php echo lang('files_attached.no_attachments_desc'); ?></p></li>
 				</ul>
 			</li>
 		</ul>
