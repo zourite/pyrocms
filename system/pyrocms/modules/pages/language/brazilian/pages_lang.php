@@ -64,7 +64,7 @@ $lang['pages_mass_delete_success'] 			= '%s páginas foram removidas.';
 $lang['pages_delete_none_notice'] 			= 'Nenhuma página foi removida.';
 $lang['pages_page_already_exist_error'] 	= 'Uma página com a URL "%s" já existe em %s.';
 $lang['pages_parent_not_exist_error'] 		= 'A página pai que você selecionou não existe.';
-$lang['pages.attachments_key_already_exist_error'] = 'As chaves internas para obter anexos deve ser unicas, mas outra página está utilizando a chave "%s".';
+$lang['pages.attachments_key_already_exist_error'] = 'Outra página já está utilizando a chave "%s", as chaves internas para obter anexos devem ser únicas para cada página.';
 
 $lang['pages.tree_explanation'] 			= 'A lista da esquerda representa as páginas em seu website. 
 Clique no ícone "+" próximo da página para exibir as páginas associadas. Quando você clicar na página você visualizará várias informações úteis nesta caixa.';

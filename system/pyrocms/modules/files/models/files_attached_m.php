@@ -67,30 +67,6 @@ class Files_attached_m extends MY_Model {
 		return $result;
 	}
 
-	public function get_many($id = 0)
-	{
-		$result = parent::get_many_by($id);
-
-		if ($result)
-		{
-			$result = array_map(array($this, 'unserialize'), $result);
-		}
-
-		return $result;
-	}
-
-	public function get_many_by($input = array())
-	{
-		$result = parent::get_many_by($input);
-
-		if ($result)
-		{
-			$result = array_map(array($this, 'unserialize'), $result);
-		}
-
-		return $result;
-	}
-
 	public function insert($input = array())
 	{
 		foreach (array('key','type','value') as $required_field)

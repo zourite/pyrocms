@@ -64,7 +64,7 @@ $lang['pages_mass_delete_success']         = '%s pages have been deleted.';
 $lang['pages_delete_none_notice']          = 'No pages were deleted.';
 $lang['pages_page_already_exist_error']    = 'A page with the URL "%s" already exists in %s.';
 $lang['pages_parent_not_exist_error']      = 'The parent page you have selected does not exist.';
-$lang['pages.attachments_key_already_exist_error'] = 'The internal keys used to retrieve the Attachments must be unique, but another page already uses the key "%s".';
+$lang['pages.attachments_key_already_exist_error'] = 'Another page already uses the key "%s", the internal keys used to retrieve the attachments must be unique for each page.';
 
 $lang['pages.tree_explanation']            = 'The list on the left represents pages on your website. 
 Click the page item to show its children. You may drag pages to order them; drag horizontally to make it a child. When you click the page text you will see all sorts of handy information in this box.';

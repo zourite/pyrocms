@@ -139,7 +139,7 @@ class Admin_attachments extends Admin_Controller {
 
 			if ($this->is_ajax())
 			{
-				$attachment_arr = isset($attachemnt) ? compact('attachment') : array();
+				$attachment_arr = isset($attachment) ? compact('attachment') : array();
 
 				$data = array();
 				$data['messages'][$status] = $message;
