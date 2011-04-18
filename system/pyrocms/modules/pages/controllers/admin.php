@@ -235,8 +235,21 @@ class Admin extends Admin_Controller
 	 */
 	public function create($parent_id = 0)
 	{
-		$this->load->model('files/files_attached_m');
+		$this->load->model(array(
+			'files/file_m',
+			'files/file_folders_m',
+			'files/files_attached_m'
+		));
+		$this->lang->load('files/files');
 		$this->lang->load('files/files_attached');
+
+		$folders = $this->file_folders_m->get_folders();
+
+		$data['folders_tree'] = array();
+		foreach ($folders as $folder)
+		{
+			$data['folders_tree'][$folder->id] = repeater('&raquo; ', $folder->depth) . $folder->name;
+		}
 
 		// Validate the page
 		if ($this->form_validation->run())
