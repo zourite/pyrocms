@@ -117,18 +117,24 @@
 				</div>
 			</li>
 			<li class="<?php echo alternator('even', ''); ?>">
-				<ul class="attachments-list spacer-bottom-none">
+				<ul id="attachments-list" class="spacer-bottom-none">
 				<?php if ($page->attachments): ?>
 					<?php foreach ($page->attachments as $attachment): ?>
-					<li class="attachment">
+					<li class="attachment inline">
 						<label>
-							<?php echo form_checkbox('attachments[]', $attachment->id, TRUE); ?>
-							<span class="name type-<?php echo $attachment->type; ?>"><?php echo $attachemnt->title; ?></span>
+							<?php echo form_checkbox('attachments[]', $attachment->id, $attachment->is_checked); ?>
+							<span class="name type-<?php echo $attachment->type; ?>"><?php echo $attachment->title; ?></span>
 						</label>
 					</li>
 					<?php endforeach; ?>
 				<?php endif; ?>
-					<li cass="empty<?php echo $page->attachments ? ' hidden': ''; ?>"><p class="spacer-bottom-none"><?php echo lang('files_attached.no_attachments_desc'); ?></p></li>
+					<li class="attachment inline tmpl">
+						<label>
+							<?php echo form_checkbox('attachments[]', '{id}', TRUE); ?>
+							<span class="name type-<?php echo '{type}'; ?>">{title}</span>
+						</label>
+					</li>
+					<li class="empty<?php echo $page->attachments ? ' hidden': ''; ?>"><p class="spacer-bottom-none"><?php echo lang('files_attached.no_attachments_desc'); ?></p></li>
 				</ul>
 			</li>
 		</ul>
@@ -178,7 +184,7 @@
 	<!-- Script tab -->
 	<div id="page-script">
 		<ul>
-			<li class="<?php echo alternator('even', ''); ?>">
+			<li class="<?php echo alternator('', 'even'); ?>">
 				<label for="js"><?php echo lang('pages.js_label'); ?></label>
 				<div style="margin-left: 160px;">
 					<?php echo form_textarea('js', $page->js, 'id="js_editor"'); ?>
@@ -195,7 +201,7 @@
 		<ul>
 			<li class="<?php echo alternator('even', ''); ?>">
 				<label for="restricted_to[]"><?php echo lang('pages.access_label');?></label>
-				<?php echo form_multiselect('restricted_to[]', $group_options, $page->restricted_to, 'size="'.(($count = count($group_options)) > 1 ? $count : 2).'"'); ?>
+				<?php echo form_multiselect('restricted_to[]', array(0 => lang('select.any')) + $group_options, $page->restricted_to, 'size="'.(($count = count($group_options)) > 1 ? $count : 2).'"'); ?>
 			</li>
 			<li class="<?php echo alternator('even', ''); ?>">
 				<label for="comments_enabled"><?php echo lang('pages.comments_enabled_label');?></label>
@@ -265,6 +271,6 @@
 <?php echo form_close(); ?>
 
 <script type="text/javascript">
-	css_editor('css_editor', "39em");
-	js_editor('js_editor', "39em");
+css_editor('css_editor', '100%');
+js_editor('js_editor', '100%');
 </script>

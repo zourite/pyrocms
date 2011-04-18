@@ -10,6 +10,7 @@
  */
 class Admin extends Admin_Controller
 {
+
 	/**
 	 * Array containing the validation rules
 	 * @access private
@@ -27,14 +28,14 @@ class Admin extends Admin_Controller
 				'rules'	=> 'trim|required|alpha_dot_dash|max_length[250]'
 			),
 			array(
-				'field' => 'attachments[]',
-				'label'	=> 'lang:files_attached.attachments_label',
-				'rules'	=> ''
-			),
-			array(
 				'field' => 'attachments_key',
 				'label'	=> 'lang:files_attached.attachments_key_label',
 				'rules'	=> 'trim|required|exact_length[40]|callback__check_attachments_key'
+			),
+			array(
+				'field' => 'attachments[]',
+				'label'	=> 'lang:files_attached.attachments_label',
+				'rules'	=> 'callback__check_attachment'
 			),
 			array(
 				'field' => 'body',
@@ -108,7 +109,10 @@ class Admin extends Admin_Controller
 	 * @access private
 	 * @var int
 	 */
-	private $page_id;
+	private $page_id			= 0;
+
+	private $attachments_key	= NULL;
+	private $attachments		= array();
 
 	/**
 	 * Constructor method
@@ -232,7 +236,7 @@ class Admin extends Admin_Controller
 	public function create($parent_id = 0)
 	{
 		$this->load->model('files/files_attached_m');
-		$this->lang->load('files/files_attached'); // TODO: Write language strings.
+		$this->lang->load('files/files_attached');
 
 		// Validate the page
 		if ($this->form_validation->run())
@@ -296,23 +300,29 @@ class Admin extends Admin_Controller
 		// Loop through each rule
 		foreach ($this->validation_rules as $rule)
 		{
-			if ($rule['field'] == 'attachments[]')
+			if ($rule['field'] === 'attachments[]')
 			{
-				$page->attachments = $this->input->post('attachments');
-
-				continue;
-			}
-			elseif ($rule['field'] == 'attachments_key' && ! ($value = $this->input->post('attachments_key')))
-			{
-				$page->attachments_key = $this->files_attached_m->generate_key();
+				$page->attachments = $this->attachments;
 
 				continue;
 			}
 
-			$page->{$rule['field']} = $this->input->post($rule['field']);
+			if ($rule['field'] === 'restricted_to[]')
+			{
+				$page->restricted_to = set_value($rule['field']);
+
+				continue;
+			}
+
+			if ($rule['field'] === 'attachments_key')
+			{
+				$page->{$rule['field']} = set_value($rule['field'], $this->files_attached_m->generate_key());
+
+				continue;
+			}
+
+			$page->{$rule['field']} = set_value($rule['field']);
 		}
-
-		$page->restricted_to = $this->input->post('restricted_to');
 
 	    // If a parent id was passed, fetch the parent details
 	    if ($parent_id > 0)
@@ -333,8 +343,8 @@ class Admin extends Admin_Controller
 			->title($this->module_details['name'], lang('pages.create_title'))
 			->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) )
 			->append_metadata( css('attachments.css', 'files') )
-			->append_metadata( js('codemirror/codemirror.js') )
 			->append_metadata( js('attachments.js', 'files') )
+			->append_metadata( js('codemirror/codemirror.js') )
 			->append_metadata( js('form.js', 'pages') )
 			->build('admin/form', $data);
 	}
@@ -351,8 +361,6 @@ class Admin extends Admin_Controller
 
 		role_or_die('pages', 'edit_live');
 
-	    // Set the page ID and get the current page
-	    $this->page_id 	= $id;
 	    $page 			= $this->versioning->get($id);
 		$revisions		= $this->versioning->get_revisions($id);
 
@@ -362,6 +370,15 @@ class Admin extends Admin_Controller
 			$this->session->set_flashdata('error', lang('pages_page_not_found_error'));
 			redirect('admin/pages/create');
 	    }
+
+	    // Set the page ID and get the current page
+	    $this->page_id = $page->id;
+
+		$this->load->model('files/files_attached_m');
+		$this->lang->load('files/files_attached');
+
+	    $this->attachments_key = $page->attachments_key;
+		$this->_fetch_attachments();
 
 		// It's stored as a CSV list
 		$page->restricted_to = explode(',', $page->restricted_to);
@@ -413,10 +430,26 @@ class Admin extends Admin_Controller
 		// Loop through each validation rule
 		foreach ($this->validation_rules as $rule)
 		{
-			if ($this->input->post($rule['field']) !== FALSE)
+			if ($rule['field'] === 'navigation_group_id')
 			{
-				$page->{$rule['field']} = set_value($rule['field']);
+				continue;
 			}
+
+			if ($rule['field'] === 'attachments[]')
+			{
+				$page->attachments = $this->attachments;
+
+				continue;
+			}
+
+			if ($rule['field'] === 'restricted_to[]')
+			{
+				$page->restricted_to = set_value($rule['field'], $page->restricted_to);
+
+				continue;
+			}
+
+			$page->{$rule['field']} = set_value($rule['field'], $page->{$rule['field']});
 		}
 
 	    // If a parent id was passed, fetch the parent details
@@ -439,6 +472,8 @@ class Admin extends Admin_Controller
 			->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) )
 
 			// Load form specific JavaScript
+			->append_metadata( css('attachments.css', 'files') )
+			->append_metadata( js('attachments.js', 'files') )
 			->append_metadata( js('codemirror/codemirror.js') )
 			->append_metadata( js('form.js', 'pages') )
 			->build('admin/form', $this->data);
@@ -588,13 +623,52 @@ class Admin extends Admin_Controller
 		<?php endif;
 	}
 
-	private function _check_attachements_key($key = '')
+	public function _check_attachments_key($key = '')
 	{
-		if ($this->pages_m->is_unique('attachments_key', $key, $this->id))
+		if ( ! $this->pages_m->is_unique('attachments_key', $key, $this->page_id))
 		{
 			$this->form_validation->set_message('_check_attachments_key', sprintf(lang('pages.attachments_key_already_exist_error'), $key));
+			return FALSE;
 		}
 
-		return FALSE;
+		$this->attachments_key = $key;
+		$this->_fetch_attachments();
+
+		return TRUE;
+	}
+
+	public function _check_attachment($id = 0)
+	{
+		if (isset($this->attachments[$id]))
+		{
+			$this->attachments[$id]->is_checked = TRUE;
+
+			return TRUE;
+		}
+
+		// ps 1.: if the key is invalid get attachment can be necessary but insane.. ;s
+		// ps 2.: maybe we can check the page key doing a comparison with attachement key..
+		if ($attachment = $this->files_attached_m->get_by(array(
+			'id' => $id	//,'key' => $this->attachments_key
+		)))
+		{
+			$this->attachments[$id] = $attachment;
+			$this->attachments[$id]->is_checked = TRUE;
+
+			return TRUE;
+		}
+
+		return TRUE;
+	}
+
+	public function _fetch_attachments()
+	{
+		$attachments = $this->files_attached_m->get_many_by(array('key' => $this->attachments_key));
+
+		foreach ($attachments as $attachment)
+		{
+			$this->attachments[$attachment->id] = $attachment;
+			$this->attachments[$attachment->id]->is_checked = ! $this->input->post();
+		}
 	}
 }
