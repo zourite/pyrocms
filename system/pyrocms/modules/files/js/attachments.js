@@ -1,5 +1,57 @@
 (function($){
 	$(function(){
+
+		pyro.clear_notifications = function(){
+			$('.notification .close').click();
+			return pyro;
+		};
+		pyro.add_notification = function(notification, append){
+			if ( ! append)
+			{
+				pyro.clear_notifications();
+			}
+			$('#shortcuts').after(notification);
+			return pyro;
+		};
+		pyro.attachments = {
+			$list			: $('#attachments-list'),
+			$empty			: $('#attachments-list > li.empty'),
+			$attachments	: $('#attachments-list > li:not(.tmpl, .empty)'),
+
+			tmpl: '',
+
+			init: function(){
+				pyro.attachments.tmpl = $('<div />').html(pyro.attachments.$list.children('.tmpl').hide().removeClass('tmpl')).html();
+			},
+			add_attachment: function(data){
+				var attachment = pyro.attachments.tmpl
+					.replace('{id}', data.id)
+					.replace('{title}', data.title)
+					.replace('{type}', data.type),
+
+				$attachemnt = $(attachment)
+					.appendTo(pyro.attachments.$list);
+
+				pyro.attachments.$attachments.add($attachemnt);
+
+				if (pyro.attachments.$empty.is(':hidden'))
+				{
+					$attachemnt.fadeIn('fast');
+				}
+				else
+				{
+					pyro.attachments.$empty
+						.fadeOut()
+						.slideUp(function(){
+							$attachemnt.fadeIn('fast');
+						});
+				}
+
+				return pyro.attachments;
+			}
+		};
+		pyro.attachments.init();
+
 		// Pick a rule type, show the correct field
 		$('input[name="attachment_type"]').change(function(){
 			$('#attachment-' + $(this).val())
@@ -42,13 +94,14 @@
 				}
 
 			$.post(url, data, function(data){
-				if (data.status == 'success')
+				if (data && data.status == 'success')
 				{
-					// TODO: Create attachment item and append to attachments list
+					pyro.add_notification(data.message)
+						.attachments.add_attachment(data.attachment);
 				}
-				else if (data.status == 'error')
+				else if (data && data.status == 'error')
 				{
-					// TODO: Display inline error notification
+					pyro.add_notification(data.message);
 				}
 			}, 'json');
 		});
