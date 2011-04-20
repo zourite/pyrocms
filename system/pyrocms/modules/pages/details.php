@@ -83,6 +83,7 @@ class Module_Pages extends Module {
 			 `parent_id` int(11) default '0',
 			 `revision_id` varchar(255) collate utf8_unicode_ci NOT NULL default '1',
 			 `layout_id` varchar(255) collate utf8_unicode_ci NOT NULL,
+			 `attachments_key` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
 			 `css` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
 			 `js` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci,
 			 `meta_title` varchar(255) collate utf8_unicode_ci NOT NULL default '',

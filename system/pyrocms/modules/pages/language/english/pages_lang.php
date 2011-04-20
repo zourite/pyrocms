@@ -17,7 +17,7 @@ $lang['pages.actions_label']               = 'Actions';
 $lang['pages.unknown_label']               = 'Unknown';
 $lang['pages.title_label']                 = 'Title';
 $lang['pages.slug_label']                  = 'URL';
-$lang['pages.navigation_label']                  = 'Add to Navigation';
+$lang['pages.navigation_label']				= 'Add to Navigation';
 $lang['pages.body_label']                  = 'Page body';
 $lang['pages.meta_title_label']            = 'Meta title';
 $lang['pages.meta_keywords_label']         = 'Meta keywords';
@@ -28,7 +28,7 @@ $lang['pages.js_label']                    = 'JavaScript';
 $lang['pages.access_label']                = 'Access';
 $lang['pages.rss_enabled_label']           = 'RSS enabled?';
 $lang['pages.comments_enabled_label']      = 'Comments enabled?';
-$lang['pages.is_home_label']      = 'Is default (home) page?';
+$lang['pages.is_home_label']				= 'Is default (home) page?';
 
 $lang['pages.status_label']                = 'Status';
 $lang['pages.draft_label']                 = 'Draft';
@@ -64,6 +64,7 @@ $lang['pages_mass_delete_success']         = '%s pages have been deleted.';
 $lang['pages_delete_none_notice']          = 'No pages were deleted.';
 $lang['pages_page_already_exist_error']    = 'A page with the URL "%s" already exists in %s.';
 $lang['pages_parent_not_exist_error']      = 'The parent page you have selected does not exist.';
+$lang['pages.attachments_key_already_exist_error'] = 'Another page already uses the key "%s", the internal keys used to retrieve the attachments must be unique for each page.';
 
 $lang['pages.tree_explanation']            = 'The list on the left represents pages on your website. 
 Click the page item to show its children. You may drag pages to order them; drag horizontally to make it a child. When you click the page text you will see all sorts of handy information in this box.';
