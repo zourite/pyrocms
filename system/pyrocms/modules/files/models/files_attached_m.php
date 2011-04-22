@@ -13,7 +13,7 @@
  */
 
 /**
- * PyroCMS File Attached Model
+ * PyroCMS Files Attached Model
  *
  * Integration of the attachments with any module to create links for download of
  * files in website frontend, create thumbnails or feature image for pages, etc...

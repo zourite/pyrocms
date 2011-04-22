@@ -88,20 +88,20 @@
 				</p>
 				<div id="attachment-file-browser" class="hidden">
 					<h3><?php echo lang('files_attached.do_file_browser_label'); ?></h3>
-					<ul>
+					<ul class="spacer-bottom-none">
 						<li class="even">
 							<label for="file_browser"><?php echo lang('files_attached.pick_folder_label'); ?></label>
 							<?php echo form_dropdown('attachment_file_folders', ($folders_tree ? (array('' => lang('select.pick')) + $folders_tree) : array('' => lang('select.none'))), '', 'id="file-browser-folders"'); ?>
-							<div class="spacer-left inline hidden" id="file-browser-files">
-								<label for="file_browser"><?php echo lang('files_attached.pick_file_label'); ?></label>
-								<div class="container">
-									<?php //helper limited, need put many options attr.. :( ?>
-									<?php //echo form_dropdown('attachment_file_contents', array(0 => lang('select.pick'), '{id}' => '{name}'), '', 'class=""'); ?>
-									<select name="attachment_file_contents" class="">
-										<option value="0"><?php echo lang('select.pick'); ?></option>
-										<option class="tmpl" value="{id}" data-filename="{filename}">{name}</option>
-									</select>
-								</div>
+						</li>
+						<li class="" id="file-browser-files">
+							<label for="file_browser"><?php echo lang('files_attached.pick_file_label'); ?></label>
+							<div class="container">
+								<?php //helper limited, need put many options attr.. :( ?>
+								<?php //echo form_dropdown('attachment_file_contents', array(0 => lang('select.pick'), '{id}' => '{name}'), '', 'class=""'); ?>
+								<select name="attachment_file_contents" class="" disabled="disabled">
+									<option value=""><?php echo lang('select.pick'); ?></option>
+									<option value="{id}" data-type="{type}" data-source="{source}" data-thumb="{thumb}" class="tmpl">{name}</option>
+								</select>
 							</div>
 						</li>
 					</ul>
@@ -113,7 +113,7 @@
 				</div>
 				<div id="attachment-link" class="hidden">
 					<h3><?php echo lang('files_attached.do_link_label'); ?></h3>
-					<ul>
+					<ul class="spacer-bottom-none">
 						<li class="even">
 							<label for="attachment_link_url"><?php echo lang('files_attached.link_url_label');?></label>
 							<?php echo form_input('attachment_link_url', 'http://'); ?>

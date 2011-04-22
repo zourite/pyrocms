@@ -27,6 +27,8 @@ $lang['files_attached.link_title_label']					= 'Title';
 $lang['files_attached.link_class_label']					= 'Class';
 $lang['files_attached.attach_link_label']					= 'Attach link';
 $lang['files_attached.attachments_key_label']				= 'Internal identification key for Attachments';
+$lang['files_attached.pick_folder_label']					= 'Select folder';
+$lang['files_attached.pick_file_label']						= 'Select file';
 
 // Descriptions
 $lang['files_attached.attachment_type_desc']				= 'Please, select the origin of the attachment to view more options.';

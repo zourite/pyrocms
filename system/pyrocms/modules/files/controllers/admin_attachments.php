@@ -165,6 +165,49 @@ class Admin_attachments extends Admin_Controller {
 		}
 	}
 
+	function file_browser($action = '', $value = '')
+	{
+		switch ($action)
+		{
+			case 'contents';
+				return $this->_get_folder_contents($value);
+		}
+
+		show_404();
+	}
+
+	function _get_folder_contents($id = 0)
+	{
+//		if ($this->is_ajax())
+//		{
+//			return print( json_encode((object) array(
+//				'status'	=> 'error',
+//				'message'	=> 'not found'
+//			)) );
+//		}
+		
+		$files = $this->file_m
+			->order_by('date_added', 'DESC')
+			->order_by('id', 'DESC')
+			->get_many_by('folder_id', $id);
+
+		foreach ($files as &$file)
+		{
+			$file = array(
+				'id'	=> $file->id,
+				'name'	=> $file->name,
+				'type'	=> $file->type,
+				'source'=> site_url('uploads/files/' . $file->filename),
+				'thumb'	=> $file->type === 'i' ? site_url('files/thumb/' . $file->id . '/64/64') : image_url($file->type . '.png', 'files'),
+			);
+		}
+
+		return print( json_encode((object) array(
+			'status'	=> 'success',
+			'files'		=> $files
+		)) );
+	}
+
 	public function _get_file_browser_field($data = array(), $name = '')
 	{
 		switch ($name)

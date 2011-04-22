@@ -27,6 +27,8 @@ $lang['files_attached.link_title_label']					= 'Title';
 $lang['files_attached.link_class_label']					= 'Classe';
 $lang['files_attached.attach_link_label']					= 'Anexar link';
 $lang['files_attached.attachments_key_label']				= 'Chave interna para identificação de anexos';
+$lang['files_attached.pick_folder_label']					= 'Selecione a pasta';
+$lang['files_attached.pick_file_label']						= 'Selecione o arquivo';
 
 // Descriptions
 $lang['files_attached.attachment_type_desc']				= 'Por favor, selecione a origem do anexo para exibir mais opções.';

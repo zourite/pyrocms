@@ -17,7 +17,13 @@
 			$list			: $('#attachments-list'),
 			$empty			: $('#attachments-list > li.empty'),
 			$attachments	: $('#attachments-list > li:not(.tmpl, .empty)'),
-			$fb_container	: $('#file-browser-files > .container'),
+
+			file_browser: {
+				$container	: $('#file-browser-files > .container'),
+				$contents	: $('#file-browser-files select'),
+
+				url			: BASE_URI + 'admin/files/attachments/file_browser/contents/'
+			},
 
 			tmpl: {
 				file_browser_item: '',
@@ -27,65 +33,79 @@
 			init: function(){
 
 				pyro.attachments.tmpl.attachment_item = $('<div />').html(pyro.attachments.$list.children('.tmpl').hide().removeClass('tmpl')).html();
-				pyro.attachments.tmpl.file_browser_item = $('<div />').html(pyro.attachments.$fb_container.find('select option.tmpl')).html();
+				pyro.attachments.tmpl.file_browser_item = $('<div />').html(pyro.attachments.file_browser.$container.find('select option.tmpl').removeClass('tmpl')).html();
 
 				// TYPE FILE BROWSER ---------------------------------------------------------------
 
-				$('select#file-browser-folders').change(function(e){
+				$('select#file-browser-folders').bind('change keyup', $.debounce(350, function(e){
 					var select	= $(this),
-						cid, id	= select.val(),
+						jqxhr	= null,
+						id		= select.val(),
+						url		= pyro.attachments.file_browser.url + id;
 
-						data, url;
-
-					if ( ! id.length)
+					if ( ! id)
 					{
+						$.uniform.update(pyro.attachments.file_browser.$contents
+							.attr('disabled', true));
+
+						pyro.attachments.file_browser.$contents
+							.find('option:not(:first)')
+							.remove();
+
 						return;
 					}
 
-					if (id == (cid = $.data(select, 'current_folder_id')))
-					{
-						return;
-					}
+					jqxhr = $.get(url, function(response){
 
-					$.data(select, 'current_folder_id', id);
+						$.uniform.update(pyro.attachments.file_browser.$contents
+							.attr('disabled', true));
 
-					// >>> add loading icon
+						pyro.attachments.file_browser.$contents
+							.find('option:not(:first)')
+							.remove();
 
-					// >>> identify ajax request >>> check if is current or skip animations on result
-
-					$.post(url, data, function(data){
-						
-						if (data && data.status == 'success')
+						if (response && response.status == 'success')
 						{
-							// >>> fill contents select >>> remove loading icon >>> show
+							var opts = '',
+								file = {
+									id: 0,
+									name: '',
+									type: '',
+									source: '',
+									thumb: ''
+								};
+
+							for (i in response.files)
+							{
+								file = response.files[i];
+								opts += pyro.attachments.tmpl.file_browser_item
+									.replace(/\{id\}/g, file.id)
+									.replace(/\{name\}/g, file.name)
+									.replace(/\{type\}/g, file.type)
+									.replace(/\{source\}/g, file.source)
+									.replace(/\{thumb\}/g, file.thumb);
+							}
+
+							if (opts)
+							{
+								$.uniform.update(pyro.attachments.file_browser.$contents
+									.append($(opts))
+									.removeAttr('disabled'));
+							}
 						}
 
-						else if (data && data.status == 'error')
+						else if (response && response.status == 'error')
 						{
-							pyro.add_notification(data.message);
+							pyro.add_notification(response.message);
 						}
 
 					}, 'json');
-
-				}).change();
+				})).change();
 
 				// >>> add event to contents select (paste from personal files) >>> make better
 				// >>> add attach post
 
 				// TYPE LINK -----------------------------------------------------------------------
-
-				// Pick a rule type, show the correct field
-				$('input[name=attachment_type]').change(function(){
-					$('#attachment-' + $(this).val())
-
-					// Show only the selected type
-					.show().siblings().hide()
-
-					// Reset values when switched
-					.find(':input:not([value="http://"])').val('');
-
-				// Trigger default checked
-				}).filter(':checked').change();
 
 				var attachments_key = $('input[name=attachments_key]').val();
 
@@ -127,13 +147,34 @@
 						}
 					}, 'json');
 				});
+
+				// TYPE CHANGE ---------------------------------------------------------------------
+
+				// Pick a rule type, show the correct field
+				$('input[name=attachment_type]').change(function(){
+					$('#attachment-' + $(this).val())
+
+					// Show only the selected type
+					.show().siblings().hide()
+
+					// Reset values when switched
+					.find(':input:not([value="http://"])').each(function(){
+						var field = $(this).val('');
+						if (field.is('select'))
+						{
+							field.change();
+						}
+					});
+
+				// Trigger default checked
+				}).filter(':checked').change();
 			},
 
 			add_attachment: function(data){
 				var attachment = pyro.attachments.tmpl.attachment_item
-					.replace('{id}', data.id)
-					.replace('{title}', data.title)
-					.replace('{type}', data.type),
+					.replace(/\{id\}/g, data.id)
+					.replace(/\{title\}/g, data.title)
+					.replace(/\{type\}/g, data.type),
 
 				$attachemnt = $(attachment)
 					.appendTo(pyro.attachments.$list);
