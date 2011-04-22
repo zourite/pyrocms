@@ -22,6 +22,11 @@
 				$container	: $('#file-browser-files > .container'),
 				$contents	: $('#file-browser-files select'),
 
+				file		: {
+					$preview	: $('#file-browser-files > .file_preview'),
+					$image		: $('<img/>')
+				},
+
 				url			: BASE_URI + 'admin/files/attachments/file_browser/contents/'
 			},
 
@@ -43,26 +48,21 @@
 						id		= select.val(),
 						url		= pyro.attachments.file_browser.url + id;
 
+					pyro.attachments.file_browser.$contents
+						.find('option:not(:first)')
+						.remove();
+
+					$.uniform.update(pyro.attachments.file_browser.$contents
+						.change().attr('disabled', true));
+
 					if ( ! id)
 					{
-						$.uniform.update(pyro.attachments.file_browser.$contents
-							.attr('disabled', true));
-
-						pyro.attachments.file_browser.$contents
-							.find('option:not(:first)')
-							.remove();
-
 						return;
 					}
 
+					pyro.attachments.file_browser.file.$preview.addClass('loading');
+
 					jqxhr = $.get(url, function(response){
-
-						$.uniform.update(pyro.attachments.file_browser.$contents
-							.attr('disabled', true));
-
-						pyro.attachments.file_browser.$contents
-							.find('option:not(:first)')
-							.remove();
 
 						if (response && response.status == 'success')
 						{
@@ -99,11 +99,47 @@
 							pyro.add_notification(response.message);
 						}
 
+						pyro.attachments.file_browser.file.$preview.removeClass('loading');
 					}, 'json');
 				})).change();
 
 				// >>> add event to contents select (paste from personal files) >>> make better
 				// >>> add attach post
+
+				// Toggle file preview
+				pyro.attachments.file_browser.$contents.bind('change keyup', $.debounce(350, function(e){
+					var self = $(this),
+						option = $('option:selected,option[value="'+self.val()+'"]', this),
+						file = {
+							id: self.val(),
+							name: option.text(),
+							type: option.attr('data-type'),
+							source: option.attr('data-source'),
+							thumb: option.attr('data-thumb')
+						};
+
+					if ( ! file.id)
+					{
+						pyro.attachments.file_browser.file.$preview.empty();
+
+						return;
+					}
+
+					pyro.attachments.file_browser.file.$preview.fadeOut(50, function(){
+						$(this).empty().addClass('loading');
+
+						pyro.attachments.file_browser.file.$image.load(function(){
+
+							// Show file preview
+							pyro.attachments.file_browser.file.$preview
+								.removeClass('loading')
+								.html(pyro.attachments.file_browser.file.$image)
+								.wrapInner('<a href="' + file.source + '" rel="modal" />')
+								.fadeIn('slow');
+
+						}).attr('src', file.thumb);
+					});
+				})).change();
 
 				// TYPE LINK -----------------------------------------------------------------------
 

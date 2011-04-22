@@ -7,3 +7,14 @@
 	display: block;
 	font-style: italic;
 }
+
+#file-browser-files .file_preview {
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	margin-top: -10px;
+}
+#file-browser-files .file_preview.loading {
+	background: transparent url(/system/pyrocms/assets/img/admin/loading.gif) no-repeat 50% 50%;
+	display: inline-block !important;
+}

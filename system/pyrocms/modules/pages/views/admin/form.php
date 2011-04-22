@@ -95,7 +95,7 @@
 						</li>
 						<li class="" id="file-browser-files">
 							<label for="file_browser"><?php echo lang('files_attached.pick_file_label'); ?></label>
-							<div class="container">
+							<div class="container float-left">
 								<?php //helper limited, need put many options attr.. :( ?>
 								<?php //echo form_dropdown('attachment_file_contents', array(0 => lang('select.pick'), '{id}' => '{name}'), '', 'class=""'); ?>
 								<select name="attachment_file_contents" class="" disabled="disabled">
@@ -103,6 +103,7 @@
 									<option value="{id}" data-type="{type}" data-source="{source}" data-thumb="{thumb}" class="tmpl">{name}</option>
 								</select>
 							</div>
+							<div class="file_preview inline"></div>
 						</li>
 					</ul>
 					<?php /* TODO: Folders dropdown -> list folder contents -> filter/select file */ ?>
