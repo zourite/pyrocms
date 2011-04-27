@@ -313,6 +313,7 @@ class Pages_m extends MY_Model
 	        'uri'				=> NULL,
 	        'parent_id'			=> (int) $input['parent_id'],
 	        'layout_id'			=> (int) $input['layout_id'],
+			'attachments_key'	=> $input['attachments_key'],
 	        'css'				=> $input['css'],
 	        'js'				=> $input['js'],
 	        'meta_title'		=> $input['meta_title'],
@@ -406,4 +407,12 @@ class Pages_m extends MY_Model
 
         return $this->db->trans_status() !== FALSE ? $ids : FALSE;
     }
+
+	public function is_unique($field = '', $value = '', $id = 0)
+	{
+		return parent::count_by(array(
+			'id !='	=> $id,
+			$field	=> $value
+		)) == 0;
+	}
 }

@@ -84,7 +84,24 @@ class Module_Files extends Module {
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		";
 
-		if($this->db->query($files) && $this->db->query($file_folders))
+		$files_attached = "
+			CREATE TABLE `files_attached` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `key` varchar(40) NOT NULL DEFAULT '',
+			  `type` varchar(20) NOT NULL,
+			  `value` varchar(32) NOT NULL,
+			  `title` varchar(255) NOT NULL,
+			  `extra` text,
+			  `order` int(11) NOT NULL DEFAULT '0',
+			  `created_on` int(11) NOT NULL DEFAULT '0',
+			  `updated_on` int(11) NOT NULL DEFAULT '0',
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+		";
+
+		if ($this->db->query($files)
+			&& $this->db->query($file_folders)
+			&& $this->db->query($files_attached))
 		{
 			return TRUE;
 		}

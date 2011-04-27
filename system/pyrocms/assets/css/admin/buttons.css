@@ -107,3 +107,38 @@ button.positive:active {
     margin: -2px 2px 0 0;
     vertical-align: middle;
 }
+
+.button-icons {
+	vertical-align: middle;
+}
+.button-icons .button {
+	display: inline-block;
+	padding: 3px 8px 3px 30px;
+	background-repeat: no-repeat;
+	background-position: 8px 50%;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 88%;
+	font-weight: normal;
+	line-height: 16px;
+	overflow: hidden;
+	color: #333;
+}
+.button-icons .button:hover {
+	background-color: #f9f9f9;
+	color: #777;
+}
+.button-icons .attach,
+.button-icons .add {
+	background-image: url('../../img/admin/icons/16/plus.png');
+}
+.button-icons .icon-only {
+	padding-left: 8px;
+	text-indent: -99999px;
+	height: 16px;
+	width: 16px;
+}

@@ -38,7 +38,7 @@
                 </div>
             <?php if ($file->type === 'i'): ?>
             <a title="<?php echo $file->name; ?>" href="<?php echo base_url() . 'media/image/' . $file->filename; ?>" rel="colorbox">
-                <img title="<?php echo $file->name; ?>" width="80" src="<?php echo site_url('files/thumb/' . $file->id . '/80'); ?>" alt="<?php echo $file->name; ?>" />
+                <img title="<?php echo $file->name; ?>" width="64" src="<?php echo site_url('files/thumb/' . $file->id . '/64/64'); ?>" alt="<?php echo $file->name; ?>" />
             </a>
             <?php else: ?>
                 <?php echo image($file->type . '.png', 'files'); ?>
