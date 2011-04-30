@@ -54,7 +54,8 @@ $lang['user_email'] 		= 'E-mail';
 $lang['user_confirm_email'] = 'Confirmez E-mail';
 $lang['user_password'] 		= 'Mot de passe';
 $lang['user_confirm_password'] = 'Confirmez Mot de passe';
-
+$lang['user_username']                         = 'Nom utilisateur';
+$lang['user_display_name']                     = 'Nom &agrave; afficher';
 $lang['user_level']			= 'Rôle utilisateur';
 $lang['user_active']		= 'Activez';
 $lang['user_lang']			= 'Langue';
